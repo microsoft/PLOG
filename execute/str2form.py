@@ -1,5 +1,6 @@
 #coding=utf-8
-
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
 class ArrayStack():
     """LIFO Stack implementation using a Python list as underlying storage"""
 
