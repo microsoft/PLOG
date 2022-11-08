@@ -3,13 +3,15 @@
 Code and data for EMNLP 2022 paper [PLOG: Table-to-Logic Pretraining for Logical Table-to-Text Generation](https://arxiv.org/abs/2205.12697).
 
 
-### Dependencies
+### Requirements
 ```angular2html
 python >= 3.8
 transformers >= 4.5
 torch >= 1.10.1
 ```
-
+#### Evaluation Scripts
+- [multi-bleu.perl](https://github.com/moses-smt/mosesdecoder/blob/master/scripts/generic/multi-bleu.perl)
+- [ROUGE](https://github.com/bheinzerling/pyrouge)
 ## Datasets
 
 ### [LOGICNLG](https://github.com/wenhuchen/LogicNLG)
