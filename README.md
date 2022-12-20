@@ -26,8 +26,8 @@ unzip all_csv.zip
 ### CONTLOG
 CONTLOG is collected based on [Logic2text](https://github.com/czyssrs/Logic2Text) dataset. We provide the table-to-text data with highlighted cells and pre-computed cell information in `data/contlog`.
 
-
-*The pretraining data will be provided later.
+### Table-to-logic pretraining data
+Download pretraining data from [here](https://drive.google.com/drive/folders/1MRqchdjwwOHsKEAer61jYDrTo0lnAyJX?usp=sharing).
 
 
 
