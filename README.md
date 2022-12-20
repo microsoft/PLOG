@@ -16,12 +16,18 @@ torch >= 1.10.1
 
 ### [LOGICNLG](https://github.com/wenhuchen/LogicNLG)
 
-Original LOGICNLG dataset consists of three `.json` files for train/dev/test samples and a directory `all_csv/` of `.csv` files for tables.
-We provide additional table-to-logic pretraining data for LOGICNLG in `data/logicnlg`.
+Original LOGICNLG dataset consists of three `.json` files for train/dev/test samples and a directory `all_csv/` of `.csv` files for tables. 
+To extract the csv files:
+```angular2html
+cd data/logicnlg
+unzip all_csv.zip
+```
 
 ### CONTLOG
-CONTLOG is collected based on [Logic2text](https://github.com/czyssrs/Logic2Text) dataset. We provide the table-to-text data and table-to-logic pretraining data in `data/contlog`.
-The pretraining data will be provided later.
+CONTLOG is collected based on [Logic2text](https://github.com/czyssrs/Logic2Text) dataset. We provide the table-to-text data with highlighted cells and pre-computed cell information in `data/contlog`.
+
+
+*The pretraining data will be provided later.
 
 
 
