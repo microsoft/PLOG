@@ -37,75 +37,125 @@ Download pretraining data from [here](https://drive.google.com/drive/folders/1MR
 
 #### LOGICNLG
 ```
-CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_train 
-                          --model [t5-base|t5-large|facebook/bart-large] 
-                          --task text 
-                          --data_path data/logicnlg 
-                          --use_cache 
-                          --affix [experiment id] 
-                          --interval_type epoch 
-                          --pre_com
+CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_train \
+                          --model [t5-base|t5-large|facebook/bart-large]  \
+                          --task text  \
+                          --data_path data/logicnlg \
+                          --use_cache \
+                          --affix [experiment id]  \
+                          --interval_type epoch  \
+                          --pre_com \
                           --load_from [pretrained model checkpoint path]
 ```
 #### CONTLOG
 ```
-CUDA_VISIBLE_DEVICES=0 python train_contlog.py --do_train
-                          --model [t5-base|t5-large|facebook/bart-large]
-                          --task text 
-                          --data_path data/contlog 
-                          --affix [experiment id] 
-                          --interval_type epoch 
-                          --pre_com
+CUDA_VISIBLE_DEVICES=0 python train_contlog.py --do_train \
+                          --model [t5-base|t5-large|facebook/bart-large]  \
+                          --task text  \
+                          --data_path data/contlog  \
+                          --affix [experiment id] \
+                          --interval_type epoch  \
+                          --pre_com  \
                           --load_from [pretrained model checkpoint path] 
 ```
 
-### Evaluation
+### Inference
 #### LOGICNLG
 ```
-CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_test 
-                          --model [t5-base|t5-large|facebook/bart-large]
-                          --task text
-                          --data_path data/logicnlg
-                          --use_cache
-                          --affix [experiment id]
-                          --pre_com 
+CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_test \
+                          --model [t5-base|t5-large|facebook/bart-large] \
+                          --task text \
+                          --data_path data/logicnlg \
+                          --use_cache  \
+                          --affix [experiment id] \
+                          --pre_com  \
                           --load_from [checkpoint path]
 
 ```
 
 #### CONTLOG
 ```
-CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_test 
-                          --model [t5-base|t5-large|facebook/bart-large] 
-                          --task text 
-                          --data_path data/contlog 
-                          --affix [experiment id] 
-                          --pre_com 
+CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_test \
+                          --model [t5-base|t5-large|facebook/bart-large] \
+                          --task text \
+                          --data_path data/contlog \
+                          --affix [experiment id]  \
+                          --pre_com  \
                           --load_from [checkpoint path]
 ```
 ## Pretraining with Table-to-Logic Data
 
 #### LOGICNLG
 ```
-CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_train 
-                          --model [t5-base|t5-large|facebook/bart-large] 
-                          --task logic 
-                          --data_path data/logicnlg 
-                          --use_cache 
-                          --affix [experiment id] 
-                          --interval_type step 
+CUDA_VISIBLE_DEVICES=0 python train_logicnlg.py --do_train \
+                          --model [t5-base|t5-large|facebook/bart-large] \
+                          --task logic  \
+                          --data_path data/logicnlg \
+                          --use_cache  \
+                          --affix [experiment id]  \
+                          --interval_type step  \
                           --pre_com
 ```
 #### CONTLOG
 ```
-CUDA_VISIBLE_DEVICES=0 python train_contlog.py --do_train
-                          --model [t5-base|t5-large|facebook/bart-large]
-                          --task logic
-                          --data_path data/contlog 
-                          --affix [experiment id] 
-                          --interval_type step
+CUDA_VISIBLE_DEVICES=0 python train_contlog.py --do_train  \
+                          --model [t5-base|t5-large|facebook/bart-large] \
+                          --task logic \
+                          --data_path data/contlog  \
+                          --affix [experiment id]  \
+                          --interval_type step \
                           --pre_com
 ```
+
+## Evaluation of Model Outputs
+We provide the model outputs in `model_outputs/` and evaluation scripts for TAPEX-Acc and TAPAS-Acc in `scripts/`.
+
+### TAPEX-Acc Evaluation
+#### CONTLOG
+
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python scripts/eval_contlog_with_tapex.py --do_predict \
+                          --model_name_or_path microsoft/tapex-large-finetuned-tabfact \
+                          --test_name model_outputs/contlog/plog-bart-large.txt \
+                          --split_name test \
+                          --output_dir tapex-contlog-eval \
+                          --affix plog-bart-large \
+                          --data_dir data/contlog \
+                          --per_device_eval_batch_size 12 \
+                          --eval_accumulation_steps 6                   
+```
+
+#### LOGICNLG
+
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python scripts/eval_logicnlg_with_tapex.py --do_predict \
+                          --model_name_or_path microsoft/tapex-large-finetuned-tabfact \
+                          --test_name model_outputs/logicnlg/plog-bart-large.txt \
+                          --split_name test \
+                          --output_dir tapex-logic-eval \
+                          --affix plog-bart-large \
+                          --data_dir data/logicnlg \
+                          --per_device_eval_batch_size 12 \
+                          --eval_accumulation_steps 6 
+
+```
+
+`--test_name` is the path to a model output file, `--affix` is the experiment ID, `--output_dir` is the directory for storing intermediate data files and prediction results, `--data_dir` is the path to original data files.
+
+### TAPAS-Acc Evaluation
+
+#### CONTLOG
+```bash
+CUDA_VISIBLE_DEVICES=0 python scripts/eval_contlog_with_tapas.py --test_file model_outputs/contlog/plog-bart-large.txt --data_dir data/contlog --batch_size 4 --split_name test
+```
+
+#### LOGICNLG
+```bash
+CUDA_VISIBLE_DEVICES=0 python scripts/eval_logicnlg_with_tapas.py --test_file model_outputs/logicnlg/plog-bart-large.json --data_dir data/contlog --batch_size 4
+```
+
 
 
 ## Reference
