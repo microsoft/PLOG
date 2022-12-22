@@ -1,3 +1,7 @@
+# coding=utf-8
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+
 import argparse
 from transformers import TapasForSequenceClassification, TapasTokenizer
 import torch, json, tqdm, os
