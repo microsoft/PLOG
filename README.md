@@ -111,6 +111,13 @@ CUDA_VISIBLE_DEVICES=0 python train_contlog.py --do_train  \
 We provide the model outputs in `model_outputs/` and evaluation scripts for TAPEX-Acc and TAPAS-Acc in `scripts/`.
 
 ### TAPEX-Acc Evaluation
+
+To use [TAPEX](https://github.com/microsoft/Table-Pretraining), you may need to install the latest version of Transformers and Datasets:
+```bash
+pip install -U datasets
+pip install -U transformers
+```
+
 #### CONTLOG
 
 
@@ -153,7 +160,7 @@ CUDA_VISIBLE_DEVICES=0 python scripts/eval_contlog_with_tapas.py --test_file mod
 
 #### LOGICNLG
 ```bash
-CUDA_VISIBLE_DEVICES=0 python scripts/eval_logicnlg_with_tapas.py --test_file model_outputs/logicnlg/plog-bart-large.json --data_dir data/contlog --batch_size 4
+CUDA_VISIBLE_DEVICES=0 python scripts/eval_logicnlg_with_tapas.py --test_file model_outputs/logicnlg/plog-bart-large.json --data_dir data/logicnlg --batch_size 4
 ```
 
 
