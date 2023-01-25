@@ -200,7 +200,7 @@ def validation_contlog(val_file, model, tokenizer, split, args):
     pred_list = []
     ref_list = []
 
-    # create files for evaluation
+    # create files for scripts
     gt = open(os.path.join(args.log_path, args.affix, f'references_{split}.txt'), 'w')
     pred = open(os.path.join(args.log_path, args.affix, f'predictions_{split}.txt'), 'w')
     pred_split = os.path.join(args.log_path, args.affix, f'predictions_{split}/')
@@ -209,7 +209,7 @@ def validation_contlog(val_file, model, tokenizer, split, args):
         os.makedirs(pred_split)
     if not os.path.exists(ref_split):
         os.makedirs(ref_split)
-
+    k = 0
     with torch.no_grad():
         for idx, batch in enumerate(tqdm(val_loader)):
             y = batch['target_ids'].to(args.device, dtype=torch.long)
@@ -223,7 +223,7 @@ def validation_contlog(val_file, model, tokenizer, split, args):
                 early_stopping=False
             )
 
-            k = 0
+
             for reference, s in zip(y, samples):
                 with open(ref_split + str(k) + '_reference.txt', 'w') as sr, \
                         open(pred_split + str(k) + '_prediction.txt', 'w') as sw:
@@ -247,7 +247,7 @@ def validation_contlog(val_file, model, tokenizer, split, args):
             print("[INFO] {} BLEU score = {}".format(split, bleu4))
             # log_file.write("[INFO] {} BLEU score = {}\n".format(split, bleu4))
 
-            # ROUGE evaluation
+            # ROUGE scripts
             r = Rouge155()
             r.system_dir = os.path.join(args.log_path, args.affix, f'predictions_{split}/')
             r.model_dir = os.path.join(args.log_path, args.affix, f'references_{split}/')
