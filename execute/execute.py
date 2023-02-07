@@ -5,7 +5,7 @@ import random
 from tqdm import tqdm
 from collections import defaultdict
 import itertools as it
-
+import pandas as pd
 from .APIs import *
 
 func_map = {
